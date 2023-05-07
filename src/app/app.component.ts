@@ -18,7 +18,6 @@ export interface Dog {
 export class AppComponent {
   dogList: Dog[] = [];
   dogListCp: Dog[] = [];
-  sortedDogList: Dog[] = [];
   searchText: string = '';
 
   constructor(public httpService: HttpService) { }
