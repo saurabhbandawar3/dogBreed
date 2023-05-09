@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { Observable, startWith, map } from 'rxjs';
 import { HttpService } from './http.service';
+import { lastValueFrom } from 'rxjs';
 
 export interface Dog {
   breedName: string;
@@ -24,18 +23,17 @@ export class AppComponent {
 
   ngOnInit(): void {
     this.httpService.getDogBreedList().subscribe((resp: any) => {
-      Object.keys(resp.message).map((eachkey: any) => {
-        if (eachkey !== 'mix') {
-          this.httpService.getDogBreedImg(eachkey).subscribe((result: any) => {
-            this.dogList.push({
-              breedName: eachkey,
-              subBreeds: resp.message[eachkey],
-              url: result.message
-            })
-            this.dogList = this.dogList;
-            this.dogListCp = JSON.parse(JSON.stringify(this.dogList));
-          });
-        }
+
+      Object.keys(resp.message).map(async (eachkey: any) => {
+        const categories$ = this.httpService.getDogBreedImg(eachkey);
+        let temp: any = await lastValueFrom(categories$);
+        this.dogList.push({
+          breedName: eachkey,
+          subBreeds: resp.message[eachkey],
+          url: temp.message
+        })
+        this.dogList = this.dogList;
+        this.dogListCp = JSON.parse(JSON.stringify(this.dogList));
       });
     })
   }
