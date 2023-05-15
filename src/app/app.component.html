@@ -4,34 +4,4 @@
   </div>
 </div>
 
-<div class="content" role="main">
-
-  <div class="searchBar-container">
-    <form>
-      <input class="form-control" [(ngModel)]="searchText" (ngModelChange)="changed($event)" type="text" id="breed"
-        name="breed" autocomplete="off" placeholder="Start Srarching for dog by breed name">
-    </form>
-  </div>
-
-  <div class="dogBreed-container">
-
-    <div class="card" *ngFor="let dog of dogList ;let i=index">
-      <img [src]="dog.url" class="d-img">
-      <div class="container">
-        <h1>{{ dog.breedName | titlecase }}</h1>
-        <div class="subBreed-label">Sub Breeds:</div>
-        <div *ngIf="dog.subBreeds.length > 0; else elseBlock" class="dog-subBreeds">
-          <div *ngFor="let sub of dog.subBreeds; let i= index">
-            {{ sub | titlecase }}<span [hidden]="i+1 === dog.subBreeds.length">, &nbsp;</span>
-          </div>
-        </div>
-        <ng-template #elseBlock>No sub breed. </ng-template>
-      </div>
-    </div>
-
-  </div>
-
-
-</div>
-
 <router-outlet></router-outlet>
