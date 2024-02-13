@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
-import { HttpService } from '../http.service';
+import { HttpService } from '../core/services/http.service';
 
 export interface Dog {
   breedName: string;
